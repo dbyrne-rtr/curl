@@ -115,8 +115,12 @@ exports.sendRequestWithRetry = function (config) { return __awaiter(void 0, void
             if (isNaN(Number(requestconf_1.INPUT_RETRIES))) {
                 throw new Error("retries should be number");
             }
+
+            core.info(`HTTP verb: ${config.method}`);
+
             client.defaults.raxConfig = {
                 instance: client,
+                httpMethodsToRetry: ['POST'],
                 retry: Number(requestconf_1.INPUT_RETRIES),
                 onRetryAttempt: function (err) {
                     var cfg = rax.getConfig(err);
