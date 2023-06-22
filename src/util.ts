@@ -55,9 +55,12 @@ export const sendRequestWithRetry = async (config: AxiosRequestConfig) => {
     if (isNaN(Number(INPUT_RETRIES))) {
       throw new Error("retries should be number");
     }
+
+    core.info(`HTTP verb: ${config.method}`);
+
     client.defaults.raxConfig = {
       instance: client,
-      httpMethodsToRetry: [config.method],
+      httpMethodsToRetry: ['POST'],
       retry: Number(INPUT_RETRIES),
       onRetryAttempt: (err) => {
         const cfg = rax.getConfig(err);
